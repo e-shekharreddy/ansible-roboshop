@@ -5,12 +5,15 @@
     ami_id: "ami-0220d79f3f480ecf5"
     sg_id: "sg-078ee4211bd66ef16"
     ENV: dev
+    action: create 
     hosted_zone_id: "Z0778804XVQJM2KVD12A"
     domain_name: "tsmvr.fun"
     instances:
     - mongodb
     - catalogue
+
   tasks:
+  ##### CREATE #####
   - name: Launch ec2 instance
     amazon.aws.ec2_instance:
       instance_type: "t3.micro"
@@ -24,10 +27,12 @@
         Name: "{{ item }}-{{ ENV }}"
     loop: "{{ instances }}"
     register: ec2_output
+    when: action == "create"
 
   - name: print output
     ansible.builtin.debug:
      msg: "{{ ec2_output }}"
+     when: action == "create"
 
   - name: Create  the Route 53 A record
     amazon.aws.route53:
@@ -39,7 +44,7 @@
       value: "{{ item.instances[0].private_ip_address }}"
       wait: true
     loop: "{{ ec2_output.results }}"
-    register: r53_record_mongodb
+    when: action == "create"
 
   - name: Create  the Route 53 A record
     amazon.aws.route53:
@@ -51,10 +56,44 @@
       value: "{{ item.instances[0].public_ip_address }}"
       wait: true
     loop: "{{ ec2_output.results }}"
-    when: item.item == "frontend"
-    register: r53_record_frontend
+    when: ### if we want more commands under when we use list [] / -
+    - item.item == "frontend"
+    - action == "create"
+    
 
+    #### destroy ####
 
+  - name: delete the Route 53 A record
+    amazon.aws.route53:
+      state: absent
+      zone: "{{ domain_name }}"
+      record: "{{ item }}-{{ ENV }}.{{ domain_name }}" # mongodb-dev.tsmvr.fun
+      type: A
+      ttl: 1
+      # value: "{{ item.instances[0].private_ip_address }}"
+      wait: false
+    loop: "{{ instances }}"
+    when: action == "destroy"
 
+  - name: Delete  Route 53 A record
+    amazon.aws.route53:
+      state: absent 
+      zone: "{{ domain_name }}"
+      record: "roboshop -{{ ENV }}.{{ domain_name }}" # roboshop.tsmvr.fun
+      type: A
+      ttl: 1
+      wait: false 
+    loop: "{{ instances }}"
+    when: ### if we want more commands under when we use list [] / -
+    - item.item == "frontend"
+    - action == "destroy"
+
+  - name: delete ec2 instance
+    amazon.aws.ec2_instance:
+      name: "{{ item }}-{{ ENV }}"
+      state: absent
+      wait: false 
+    loop: "{{ instances }}"
+    when: action == "destroy"
     
     
