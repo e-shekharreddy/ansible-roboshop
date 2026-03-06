@@ -7,7 +7,7 @@
     sg_id: "sg-078ee4211bd66ef16"
     ENV: dev
     domine_name: "tsmvr.fun"
-    instances:
+    instance:
     - mongodb
     - catalogue
   tasks:
@@ -22,7 +22,7 @@
         ENV: "{{ ENV }}"
         component: "{{ item }}"
         Name: "{{ item }}-{{ ENV }}
-    loop: "{{ instances }}"
+    loop: "{{ instance }}"
     register: ec2_output
 
   - name: print output
