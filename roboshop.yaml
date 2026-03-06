@@ -1,12 +1,12 @@
 - name: create ec2 instant records
   hosts: all
   connection: local
-  # become: yes
   vars:
     ami_id: "ami-0220d79f3f480ecf5"
     sg_id: "sg-078ee4211bd66ef16"
     ENV: dev
-    # domine_name: "tsmvr.fun"
+    hosted_zone_id: "Z0778804XVQJM2KVD12A"
+    domine_name: "tsmvr.fun"
     instances:
     - mongodb
     - catalogue
@@ -28,3 +28,19 @@
   - name: print output
     ansible.builtin.debug:
      msg: "{{ ec2_output }}"
+
+  - name: Create  the Route 53 A record
+    amazon.aws.route53:
+      state: present
+      zone: "{{ hosted_zone_id }}"
+      record: "{{ item.item }}-{{ ENV }}.{{ domine_name }}" # mongodb-dev.tsmvr.fun
+      type: "{{ A }}"
+      ttl: "{{ 1 }}"
+      value: "{{ item.instances[0].private_ip_address }}"
+      wait: true
+    loop: "{{ec2_output.results}}"
+    register: r53_record
+
+
+    
+    
