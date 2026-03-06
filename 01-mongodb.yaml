@@ -14,7 +14,7 @@
 
   - name: changes in file # allow remote connections 
     ansible.builtin.replace:
-      path: "{{ /etc/mongod.conf }}"
+      path: /etc/mongod.conf
       regexp: "127.0.0.1"  # Matches '10.0.1.' (note the escaped dots)
       replace: "0.0.0.0" 
       
