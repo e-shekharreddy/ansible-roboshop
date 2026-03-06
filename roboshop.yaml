@@ -34,7 +34,7 @@
   - name: print output
     ansible.builtin.debug:
      msg: "{{ ec2_output }}"
-     when: action == "create"
+    when: action == "create"
 
   - name: Create the Route 53 A record
     amazon.aws.route53:
