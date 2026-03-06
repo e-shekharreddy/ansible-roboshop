@@ -32,13 +32,13 @@
   - name: Create  the Route 53 A record
     amazon.aws.route53:
       state: present
-      zone: "{{ hosted_zone_id }}"
+      zone: "{{ domine_name }}"
       record: "{{ item.item }}-{{ ENV }}.{{ domine_name }}" # mongodb-dev.tsmvr.fun
       type: A
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}"
       wait: true
-    loop: "{{ec2_output.results}}"
+    loop: "{{ ec2_output.results }}"
     register: r53_record
 
 
