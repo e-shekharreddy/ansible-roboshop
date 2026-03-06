@@ -7,7 +7,7 @@
     sg_id: "sg-078ee4211bd66ef16"
     ENV: dev
     domine_name: "tsmvr.fun"
-    instance:
+    instances:
     - mongodb
     - catalogue
   tasks:
@@ -21,8 +21,8 @@
         Project: roboshop
         ENV: "{{ ENV }}"
         component: "{{ item }}"
-        Name: "{{ item }}-{{ ENV }}
-    loop: "{{ instance }}"
+        Name: "{{ item }}-{{ ENV }}"
+    loop: "{{ instances }}"
     register: ec2_output
 
   - name: print output
