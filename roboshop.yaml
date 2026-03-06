@@ -79,7 +79,7 @@
     loop: "{{ instances }}"
     when: action == "destroy"
 
-  - name: Delete  Route 53 A record
+  - name: Delete Route 53 A record
     amazon.aws.route53:
       state: absent 
       zone: "{{ domain_name }}"
