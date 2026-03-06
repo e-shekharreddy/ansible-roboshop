@@ -89,7 +89,7 @@
       wait: false 
     loop: "{{ instances }}"
     when: ### if we want more commands under when we use list [] / -
-    - item.item == "frontend"
+    - item == "frontend"
     - action == "destroy"
 
   - name: delete ec2 instance
