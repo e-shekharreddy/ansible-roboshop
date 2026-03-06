@@ -20,6 +20,8 @@
       image_id: "{{ ami_id }}"
       security_group: "{{ sg_id }}"
       name: "{{ item }}-{{ ENV }}"
+      wait: false 
+      overwrite: true
       tags:
         Project: roboshop
         ENV: "{{ ENV }}"
@@ -34,27 +36,29 @@
      msg: "{{ ec2_output }}"
      when: action == "create"
 
-  - name: Create  the Route 53 A record
+  - name: Create the Route 53 A record
     amazon.aws.route53:
       state: present
       zone: "{{ domain_name }}"
       record: "{{ item.item }}-{{ ENV }}.{{ domain_name }}" # mongodb-dev.tsmvr.fun
       type: A
       ttl: 1
+      overwrite: true
       value: "{{ item.instances[0].private_ip_address }}"
-      wait: true
+      wait: false
     loop: "{{ ec2_output.results }}"
     when: action == "create"
 
-  - name: Create  the Route 53 A record
+  - name: Create the Route 53 A record frontend
     amazon.aws.route53:
       state: present
       zone: "{{ domain_name }}"
       record: "roboshop -{{ ENV }}.{{ domain_name }}" # roboshop.tsmvr.fun
       type: A
       ttl: 1
+      overwrite: true
       value: "{{ item.instances[0].public_ip_address }}"
-      wait: true
+      wait: false
     loop: "{{ ec2_output.results }}"
     when: ### if we want more commands under when we use list [] / -
     - item.item == "frontend"

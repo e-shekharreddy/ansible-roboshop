@@ -19,20 +19,20 @@
         system: yes           # Designates as a system account
         state: present
 
-  # - name: delete app directory
-  #   ansible.builtin.file:
-  #     path: /app
-  #     state: absent    
+  - name: delete app directory # deleting before creating bcz if developer change the code 
+    ansible.builtin.file:
+      path: /app
+      state: absent    
 
   - name: Create app directory 
     ansible.builtin.file:
       path: /app
       state: directory
   
-  # - name: delete catalogue zip file
-  #   ansible.builtin.file:
-  #     path: /tmp/catalogue.zip
-  #     state: absent
+  - name: delete catalogue zip file   # delete before downloading again
+    ansible.builtin.file:
+      path: /tmp/catalogue.zip
+      state: absent
   
   - name: Download catalogue code 
     ansible.builtin.get_url:
@@ -66,13 +66,22 @@
     src: mongo.repo
     dest: /etc/yum.repos.d/mongo.repo
 
-  - name: install mongdb clint
+  - name: install mongo client
     ansible.builtin.dnf:
     name: mongodb-mongosh
     state: present
 
-  
+  - name: check products loaded
+    ansible.builtin.command: mongosh --host "{{ MONGODB_HOST }}" --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+    register: catalogue_output
 
+  - name: print the output
+    ansible.builtin.debug:
+      msg: "{{ catalogue_output }}"
+
+  - name: products loading
+    ansible.builtin.shell: mongosh --host "{{ MONGODB_HOST }}" </app/db/master-data.js
+    when: catalogue_output.stdout | int < 0
 
   - name: Enable and start catalogue
     ansible.builtin.systemd_service:
