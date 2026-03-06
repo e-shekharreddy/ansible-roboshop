@@ -22,7 +22,6 @@
       security_group: "{{ sg_id }}"
       name: "{{ item }}-{{ ENV }}"
       wait: false 
-      overwrite: true
       tags:
         Project: roboshop
         ENV: "{{ ENV }}"
