@@ -6,7 +6,7 @@
     sg_id: "sg-078ee4211bd66ef16"
     ENV: dev
     hosted_zone_id: "Z0778804XVQJM2KVD12A"
-    domine_name: "tsmvr.fun"
+    domain_name: "tsmvr.fun"
     instances:
     - mongodb
     - catalogue
@@ -32,14 +32,28 @@
   - name: Create  the Route 53 A record
     amazon.aws.route53:
       state: present
-      zone: "{{ domine_name }}"
-      record: "{{ item.item }}-{{ ENV }}.{{ domine_name }}" # mongodb-dev.tsmvr.fun
+      zone: "{{ domain_name }}"
+      record: "{{ item.item }}-{{ ENV }}.{{ domain_name }}" # mongodb-dev.tsmvr.fun
       type: A
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}"
       wait: true
     loop: "{{ ec2_output.results }}"
-    register: r53_record
+    register: r53_record_mongodb
+
+  - name: Create  the Route 53 A record
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_name }}"
+      record: "roboshop -{{ ENV }}.{{ domain_name }}" # roboshop.tsmvr.fun
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].public_ip_address }}"
+      wait: true
+    loop: "{{ ec2_output.results }}"
+    when: item.item == "frontend"
+    register: r53_record_frontend
+
 
 
     
