@@ -52,7 +52,7 @@
       path: /app
 
   - name: copying systemctl service 
-    ansibl.builtin.copy:
+    ansibl.builtin.template:
       src: user.service
       dest: /etc/systemd/system/user.service
 
@@ -68,4 +68,3 @@
       state: started
       enable: true
 
-      
