@@ -21,7 +21,7 @@
       image_id: "{{ ami_id }}"
       security_group: "{{ sg_id }}"
       name: "{{ item }}-{{ ENV }}"
-      wait: false 
+      wait: true 
     
       tags:
         Project: roboshop
@@ -46,7 +46,7 @@
       ttl: 1
       overwrite: true
       value: "{{ item.instances[0].private_ip_address }}"
-      wait: false
+      wait: true
     loop: "{{ ec2_output.results }}"
     when: action == "create"
 
@@ -59,7 +59,7 @@
       ttl: 1
       overwrite: true
       value: "{{ item.instances[0].public_ip_address }}"
-      wait: false
+      wait: true
     loop: "{{ ec2_output.results }}"
     when: ### if we want more commands under when we use list [] / -
     - item.item == "frontend"
