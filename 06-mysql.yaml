@@ -1,0 +1,25 @@
+- name: mysql configure
+  hosts: mysql
+  become: yes
+  tasks:
+  - name: install mysql server
+    ansibl.builtin.dnf:
+      name: mysql-server
+      state: present
+
+
+  - name: Set root password roboshop
+    ansible.builtin.command: mysql_secure_installation --set-root-pass RoboShop@1
+
+# - name: Set MySQL root password
+#   community.mysql.mysql_user:
+#     name: root
+#     host: localhost
+#     password: RoboShop@1
+#     login_unix_socket: /var/lib/mysql/mysql.sock
+
+  - name: enable and start mysql
+    ansibl.builtin.systemd_service:
+      name: mysql
+      state: started
+      enabled: yes

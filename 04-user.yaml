@@ -46,8 +46,8 @@
     ansible.builtin.unarchive:
     src: /app
     dest: /tmp/user.zip
-    # remote_src: yes               # if we wont give this line it through error
-    
+    # remote_src: yes               #### if we wont give this line it through error
+
   - name: installing dependencies
     community.general.npm:
       name: npm
@@ -68,5 +68,5 @@
     ansibl.builtin.systemd_service:
       name: user
       state: started
-      enable: true
+      enabled: true
 
