@@ -5,7 +5,7 @@
   - name: disable nodejs default version
     ansible.builtin.command: dnf module disable nodejs -y
   
-  - name: Enable Node.js 20 module stream and install nodejs package
+  - name: Enable Node.js 20 install nodejs package
     ansible.builtin.dnf:
       name: "@nodejs:20"
       state: present
@@ -41,8 +41,8 @@
   
   - name: unzip the code 
     ansible.builtin.unarchive:
-      src: /app
-      dest: /tmp/catalogue.zip
+      src: /tmp/catalogue.zip
+      dest: /app
       remote_src: yes
 
   - name: install dependencies
