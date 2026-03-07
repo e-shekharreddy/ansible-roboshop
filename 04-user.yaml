@@ -1,3 +1,4 @@
+### wantedly i used double "s two times in catalogue.service file lets see will it throgh the error ###
 - name: user configure
   hosts: user
   become: yes

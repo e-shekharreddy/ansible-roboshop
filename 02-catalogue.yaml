@@ -1,4 +1,4 @@
-### wantedly i used "s in catalogue.service file lets see how it throgh the error ###
+### wantedly i used double "s two times in catalogue.service file lets see will it throgh the error ###
 - name: catalogue configure
   hosts: catalogue
   become: yes
