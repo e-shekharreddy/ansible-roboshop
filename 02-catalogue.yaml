@@ -15,9 +15,9 @@
     ansible.builtin.user:
         name: roboshop
         comment: "roboshop system user" 
-        home: /app        # Set primary group to 'myapp'
-        shell: /sbin/nologin  # Prevents interactive login
-        system: yes           # Designates as a system account
+        home: /app        
+        shell: /sbin/nologin  
+        system: yes           
         state: present
 
   - name: delete app directory # deleting before creating bcz if developer change the code 
