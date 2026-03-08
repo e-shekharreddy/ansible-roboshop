@@ -1,4 +1,4 @@
-# ansible-playbook -i localhost,   -e '{"instances":["mongodb","catalogue","redis","user","cart","mysql","shipping","rabbitmq","payment","frontend"]}'  -e action=destroy roboshop.yaml
+# ansible-playbook -i localhost, -e "instances=['mongodb','catalogue','redis','user','cart','mysql','shipping','rabbitmq','payment','frontend']" roboshop.yaml 
 - name: create ec2 instant records
   hosts: all
   connection: local
@@ -54,7 +54,7 @@
     amazon.aws.route53:
       state: present
       zone: "{{ domain_name }}"
-      record: "roboshop -{{ ENV }}.{{ domain_name }}" # roboshop.tsmvr.fun
+      record: "roboshop-{{ ENV }}.{{ domain_name }}" # roboshop.tsmvr.fun
       type: A
       ttl: 1
       overwrite: true
