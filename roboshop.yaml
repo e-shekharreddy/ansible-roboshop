@@ -1,4 +1,9 @@
 # ansible-playbook -i localhost, -e "instances=['mongodb','catalogue','redis','user','cart','mysql','shipping','rabbitmq','payment','frontend']" roboshop.yaml 
+
+# ansible-playbook -i localhost, -e "instances=['mongodb','catalogue','redis','user','cart','mysql','shipping','rabbitmq','payment','frontend']" -e action=destroy roboshop.yaml 
+
+# ansible-playbook -i inventory.ini 01-mongodb.yaml ; ansible-playbook -i inventory.ini 02-catalogue.yaml ; ansible-playbook -i inventory.ini 03-redis.yaml ; ansible-playbook -i inventory.ini 04-user.yaml ; ansible-playbook -i inventory.ini 05-cart.yaml ; ansible-playbook -i inventory.ini 06-mysql.yaml ; ansible-playbook -i inventory.ini 07-shipping.yaml ; ansible-playbook -i inventory.ini 08-rabbitmq.yaml ; ansible-playbook -i inventory.ini 09-payment.yaml ; ansible-playbook -i inventory.ini 10-frontend.yaml
+
 - name: create ec2 instant records
   hosts: all
   connection: local
