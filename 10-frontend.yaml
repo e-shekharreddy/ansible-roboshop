@@ -11,11 +11,11 @@
       name: nginx
       state: present
 
-  - name: enable and start nginx
-    ansible.builtin.service:
-      name: nginx
-      state: restarted
-      enabled: yes
+  # - name: enable and start nginx
+  #   ansible.builtin.service:
+  #     name: nginx
+  #     state: started
+  #     enabled: yes
 
 
   - name: removeing directory 
@@ -43,7 +43,7 @@
 
   - name: removeing default nginx conf
     ansible.builtin.file:
-      path: etc/nginx/nginx.conf
+      path: /etc/nginx/nginx.conf
       state: absent
 
   - name: copy the conf file
