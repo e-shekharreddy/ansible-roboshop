@@ -54,7 +54,7 @@
     amazon.aws.route53:
       state: present
       zone: "{{ domain_name }}"
-      record: "roboshop-{{ ENV }}.{{ domain_name }}" # roboshop.tsmvr.fun
+      record: "roboshop-{{ ENV }}.{{ domain_name }}" # roboshop-dev.tsmvr.fun
       type: A
       ttl: 1
       overwrite: true
