@@ -1,6 +1,7 @@
 - name: mysql configure
   hosts: mysql
   become: yes
+
   tasks:
   - name: install mysql server
     ansibl.builtin.dnf:
@@ -19,7 +20,7 @@
 #     login_unix_socket: /var/lib/mysql/mysql.sock
 
   - name: enable and start mysql
-    ansibl.builtin.systemd_service:
+    ansibl.builtin.service:
       name: mysql
-      state: started
+      state: restarted
       enabled: yes
