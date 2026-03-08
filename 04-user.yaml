@@ -44,8 +44,8 @@
 
   - name: unzinp the code
     ansible.builtin.unarchive:
-      src: /app
-      dest: /tmp/user.zip
+      src: /temp/user.zip
+      dest: /app
       remote_src: yes               #### if we wont give this line it through error
 
   - name: installing dependencies
