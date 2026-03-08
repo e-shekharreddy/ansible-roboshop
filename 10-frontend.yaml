@@ -11,11 +11,11 @@
       name: nginx
       state: present
 
-  - name: restarte nginx
+  - name: enable and start nginx
     ansible.builtin.service:
       name: nginx
       state: started
-      enabled: true 
+      enabled: yes
 
 
   - name: removeing directory 
