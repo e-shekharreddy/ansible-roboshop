@@ -13,13 +13,13 @@
 
   - name: removeing directory 
     ansible.builtin.file:
-    path: /usr/share/nginx/html
-    state: absent
+      path: /usr/share/nginx/html
+      state: absent
 
   - name: createing directory
     ansible.builtin.file:
-    path: /usr/share/nginx/html
-    state: directory
+      path: /usr/share/nginx/html
+      state: directory
 
 
   - name: downloading the frontend code
@@ -35,8 +35,8 @@
 
   - name: removeing default nginx conf
     ansible.builtin.file:
-    path: etc/nginx/nginx.conf
-    state: absent
+      path: etc/nginx/nginx.conf
+      state: absent
 
   - name: copy the conf file
     ansible.builtin.template:
