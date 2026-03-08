@@ -4,7 +4,7 @@
 
   tasks:
   - name: install mysql server
-    ansibl.builtin.dnf:
+    ansible.builtin.dnf:
       name: mysql-server
       state: present
 
@@ -20,7 +20,7 @@
 #     login_unix_socket: /var/lib/mysql/mysql.sock
 
   - name: enable and start mysql
-    ansibl.builtin.service:
+    ansible.builtin.service:
       name: mysql
       state: restarted
       enabled: yes
