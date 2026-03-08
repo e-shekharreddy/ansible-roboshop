@@ -20,7 +20,7 @@
 #     login_unix_socket: /var/lib/mysql/mysql.sock
 
   - name: enable and start mysql
-    ansible.builtin.service:
+    ansible.builtin.systemd_service:
       name: mysql
-      state: restarted
+      state: started
       enabled: yes
