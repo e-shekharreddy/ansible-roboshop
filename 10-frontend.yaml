@@ -28,7 +28,7 @@
       remote_src: yes
 
   - name: copy the conf file
-    ansible.builtin.copy:
+    ansible.builtin.template:
       src: nginx.conf
       dest: etc/nginx/nginx.conf
 

@@ -5,9 +5,13 @@
   tasks:
   - name: installing python
     ansible.builtin.dnf:
-      name: python3 gcc python3-devel
+      name: "{{ item }}"
       state: present
-
+    loop:
+    - python3 
+    - gcc 
+    - python3-devel
+  
   - name: Create a system user 
     ansible.builtin.user:
         name: roboshop
@@ -44,7 +48,17 @@
       remote_src: yes
 
   - name: install dependencies
-    ansible.builtin.command: pip3 install -r requirements.txt
+    ansible.builtin.pip: 
+      requirements: requirements.txt
+      excutable: pip3.9
+      args:
+        chdir: /app
+
+
+  # - name: install dependencies
+  #   ansible.builtin.command: pip3 install -r requirements.txt
+  #   args:
+        # chdir: /app
      
 
   - name: copying System service file
@@ -58,10 +72,9 @@
       daemon_reload: true
       name: payment
     
-  - name: enable and start paymwnr
-    ansible.builtin.dnf:
+  - name: enable and start payment
+    ansible.builtin.systemd_service:
       name: payment
       state: started
       enabled: true
 
-      
