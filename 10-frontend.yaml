@@ -11,12 +11,6 @@
       name: nginx
       state: present
 
-  - name: enable and start nginx
-    ansible.builtin.service:
-      name: nginx
-      state: started
-      enabled: true 
-
 
   - name: removeing directory 
     ansible.builtin.file:
@@ -43,17 +37,23 @@
 
   - name: removeing default nginx conf
     ansible.builtin.file:
-      path: /etc/nginx/nginx.conf
       state: absent
+      path: /etc/nginx/nginx.conf
+      
 
   - name: copy the conf file
     ansible.builtin.template:
       src: nginx.conf
       dest: /etc/nginx/nginx.conf
 
-  - name: restarte nginx
-    ansible.builtin.systemd_service:
-      name: nginx
-      daemon_reload: yes
-      state: restarted
+  # - name: restarte nginx
+  #   ansible.builtin.systemd_service:
+  #     name: nginx
+  #     daemon_reload: yes
+  #     state: restarted
   
+  - name: enable and start nginx
+    ansible.builtin.service:
+      name: nginx
+      state: restarted
+      enabled: true 
