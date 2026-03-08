@@ -11,12 +11,25 @@
   - name: insatalling rabbitmq server
     ansible.builtin.dnf:
       name: rabbitmq-server
+      state: present
 
-  - name: adding user
-    ansible.builtin.command: rabbitmqctl add_user roboshop roboshop123
+  - name: rabbitmq user creation
+    community.rabbitmq.rabbitmq_user:
+        user: roboshop
+        password: roboshop123
+        permissions:
+         - vhost: /
+         - configure_priv: .*
+         - read_priv: .*
+         - write_priv: .*
+        state: present
 
-  - name: setting permission
-    ansible.builtin.command: rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+
+  # - name: adding user
+  #   ansible.builtin.command: rabbitmqctl add_user roboshop roboshop123
+
+  # - name: setting permission
+  #   ansible.builtin.command: rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
 
   - name: enable and start the rabbitmq
     ansible.builtin>systemd_service:
