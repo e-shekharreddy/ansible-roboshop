@@ -71,6 +71,15 @@
       name: mysql
       state: present
 
+  - name: install dependencies
+    ansible.builtin.pip: 
+      name: "{{ item }}"
+      excutable: pip3.9
+    loop:
+    - PyMySQL
+    - cryptography 
+      
+
   - name: loading data or schema or import shipping data 
     community.mysql.mysql_db:
       state: import
