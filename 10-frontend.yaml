@@ -11,6 +11,12 @@
       name: nginx
       state: present
 
+  - name: enable and start nginx
+    ansible.builtin.serviced:
+      name: nginx
+      state: started
+      enabled: yes
+
 
   - name: removeing directory 
     ansible.builtin.file:
@@ -45,11 +51,9 @@
       src: nginx.conf
       dest: /etc/nginx/nginx.conf
 
-  - name: restart  nginx
-    ansible.builtin.systemd:
+  - name: restarte nginx
+    ansible.builtin.systemd_service:
       name: nginx
       daemon_reload: yes
-      state: started
-      enabled: yes
-
+      state: restarted
   
