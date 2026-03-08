@@ -65,6 +65,12 @@
       state: restarted
       daemon_reload: true
       name: shipping
+  
+  - name: enable and start shipping
+    ansible.builtin.service:
+      name: shipping
+      state: started
+      enabled: yes 
 
   - name: installing mysql client # we loop this at top in install maven task
     ansible.builtin.dnf:
@@ -94,9 +100,9 @@
       - /app/db/master-data.sql
 
   - name: start and enable shipping
-    ansible.builtin.systemd_service:
+    ansible.builtin.service:
       name: shipping
       state: restarted
-      enabled: true
+   
 
       
