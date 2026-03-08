@@ -11,6 +11,13 @@
       name: nginx
       state: present
 
+  - name: restarte nginx
+    ansible.builtin.service:
+      name: nginx
+      state: started
+      enabled: true 
+
+
   - name: removeing directory 
     ansible.builtin.file:
       path: /usr/share/nginx/html
@@ -48,4 +55,4 @@
     ansible.builtin.service:
       name: nginx
       state: restarted
-      enabled: true 
+  
