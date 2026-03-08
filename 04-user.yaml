@@ -12,9 +12,9 @@
       name: nodejs
       state: present
 
-  - name: Create the 'apiuser' system account
+  - name: Create the system user
     ansible.builtin.user:
-      name: system user
+      name: roboshop
       comment: "roboshop system user"
       create_home: no
       home: /app   
