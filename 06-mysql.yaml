@@ -19,8 +19,8 @@
 #     password: RoboShop@1
 #     login_unix_socket: /var/lib/mysql/mysql.sock
 
-  - name: enable and start mysql
+  - name: enable and start mysqld
     ansible.builtin.systemd_service:
       name: mysqld
-      state: started
+      state: restarted
       enabled: yes
