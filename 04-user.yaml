@@ -33,7 +33,7 @@
       state: directory
   
   - name: delete the user code
-    ansibl.builtin.file:
+    ansible.builtin.file:
       path: /tmp/user.zip
       state: absent
 
