@@ -23,7 +23,7 @@
       state: present
 
   - name: delete directory
-    ansibl.builtin.file:
+    ansible.builtin.file:
       name: /app
       state: absent
 
